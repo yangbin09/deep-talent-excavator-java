@@ -1,0 +1,21 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: deep-talent-excavator
+  datasource:
+    url: jdbc:sqlite:data/deep_talent.sqlite
+    driver-class-name: org.sqlite.JDBC
+    username: sa
+    password: 
+  jpa:
+    database-platform: org.hibernate.community.dialect.SQLiteDialect
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+deepseek:
+  api-key: ${DEEPSEEK_API_KEY:sk-935c19fce76b4556a026b0d7ad49db03}
+  base-url: https://api.deepseek.com
+  chat-model: deepseek-chat
