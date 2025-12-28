@@ -1,4 +1,7 @@
-package com.deeptalent.domain;
+package com.deeptalent.domain.ai;
+
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * 消息实体类
@@ -8,6 +11,8 @@ package com.deeptalent.domain;
  * @date 2025-12-28
  * @version 1.0.0
  */
+@Setter
+@Getter
 public class Message {
     /**
      * 消息角色
@@ -29,19 +34,4 @@ public class Message {
         this.content = content;
     }
 
-    public String getRole() {
-        return role;
-    }
-
-    public void setRole(String role) {
-        this.role = role;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
-    }
 }

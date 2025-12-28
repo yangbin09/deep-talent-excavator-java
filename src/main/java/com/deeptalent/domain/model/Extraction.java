@@ -1,4 +1,7 @@
-package com.deeptalent.domain;
+package com.deeptalent.domain.model;
+
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * 特征提取实体类
@@ -8,6 +11,8 @@ package com.deeptalent.domain;
  * @date 2025-12-28
  * @version 1.0.0
  */
+@Setter
+@Getter
 public class Extraction {
     /**
      * 标签
@@ -43,35 +48,4 @@ public class Extraction {
 
     public Extraction() {}
 
-    public String getTag() {
-        return tag;
-    }
-
-    public void setTag(String tag) {
-        this.tag = tag;
-    }
-
-    public String getEvidence() {
-        return evidence;
-    }
-
-    public void setEvidence(String evidence) {
-        this.evidence = evidence;
-    }
-
-    public String getPhase() {
-        return phase;
-    }
-
-    public void setPhase(String phase) {
-        this.phase = phase;
-    }
-
-    public double getConfidence() {
-        return confidence;
-    }
-
-    public void setConfidence(double confidence) {
-        this.confidence = confidence;
-    }
 }

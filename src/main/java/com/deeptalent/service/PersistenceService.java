@@ -1,6 +1,6 @@
 package com.deeptalent.service;
 
-import com.deeptalent.domain.DeepTalentState;
+import com.deeptalent.domain.model.DeepTalentState;
 
 /**
  * 持久化服务接口

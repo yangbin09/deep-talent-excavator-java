@@ -1,13 +1,11 @@
 package com.deeptalent.service.impl;
 
-import com.deeptalent.domain.DeepTalentState;
-import com.deeptalent.domain.EvaluationResult;
-import com.deeptalent.domain.Message;
-import com.deeptalent.domain.Phase;
+import com.deeptalent.domain.model.DeepTalentState;
+import com.deeptalent.domain.model.EvaluationResult;
+import com.deeptalent.domain.enums.Phase;
 import com.deeptalent.service.PersistenceService;
 import com.deeptalent.service.PromptService;
 import com.deeptalent.service.ai.DeepTalentAgent;
-import dev.langchain4j.data.message.ChatMessage;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -16,7 +14,6 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;

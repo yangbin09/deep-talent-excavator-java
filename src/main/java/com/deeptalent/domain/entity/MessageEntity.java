@@ -1,4 +1,4 @@
-package com.deeptalent.domain;
+package com.deeptalent.domain.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
@@ -10,19 +10,19 @@ import lombok.Data;
 import java.time.LocalDateTime;
 
 /**
- * 特征提取记录实体类
- * 存储从用户对话中提取的画像特征
+ * 消息记录实体类
+ * 存储具体的对话内容
  *
  * @author 小阳
  * @date 2025-12-28
  * @version 1.0.0
  */
 @Data
-@TableName("dt_extraction")
-public class ExtractionEntity {
-
+@TableName("dt_message")
+public class MessageEntity {
+    
     /**
-     * ID (自增主键)
+     * 消息ID (自增主键)
      */
     @TableId(type = IdType.AUTO)
     private Long id;
@@ -33,24 +33,19 @@ public class ExtractionEntity {
     private String threadId;
 
     /**
-     * 所属阶段 (Phase)
+     * 消息角色 (user/assistant/system)
      */
-    private String phase;
+    private String role;
 
     /**
-     * 特征标签
+     * 消息内容 (长文本)
      */
-    private String tag;
+    private String content;
 
     /**
-     * 证据文本
+     * 消息顺序 (用于排序)
      */
-    private String evidence;
-
-    /**
-     * 置信度
-     */
-    private Double confidence;
+    private Integer sequence;
 
     /**
      * 创建时间
@@ -58,16 +53,15 @@ public class ExtractionEntity {
     @TableField(fill = FieldFill.INSERT)
     private LocalDateTime createdAt;
 
-    public ExtractionEntity() {
+    public MessageEntity() {
     }
 
-    public ExtractionEntity(Long id, String threadId, String phase, String tag, String evidence, Double confidence, LocalDateTime createdAt) {
+    public MessageEntity(Long id, String threadId, String role, String content, Integer sequence, LocalDateTime createdAt) {
         this.id = id;
         this.threadId = threadId;
-        this.phase = phase;
-        this.tag = tag;
-        this.evidence = evidence;
-        this.confidence = confidence;
+        this.role = role;
+        this.content = content;
+        this.sequence = sequence;
         this.createdAt = createdAt;
     }
 

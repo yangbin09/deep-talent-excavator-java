@@ -1,9 +1,9 @@
 package com.deeptalent.service.impl;
 
-import com.deeptalent.domain.DeepTalentState;
-import com.deeptalent.domain.Extraction;
-import com.deeptalent.domain.Message;
-import com.deeptalent.domain.Phase;
+import com.deeptalent.domain.model.DeepTalentState;
+import com.deeptalent.domain.model.Extraction;
+import com.deeptalent.domain.ai.Message;
+import com.deeptalent.domain.enums.Phase;
 import com.deeptalent.mapper.ConversationMapper;
 import com.deeptalent.mapper.ExtractionMapper;
 import com.deeptalent.mapper.MessageMapper;
@@ -15,7 +15,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 
 @SpringBootTest

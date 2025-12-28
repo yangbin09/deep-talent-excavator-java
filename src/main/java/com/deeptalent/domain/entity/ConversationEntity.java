@@ -1,9 +1,12 @@
-package com.deeptalent.domain;
+package com.deeptalent.domain.entity;
 
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.FieldFill;
+import lombok.Getter;
+import lombok.Setter;
+
 import java.time.LocalDateTime;
 
 /**
@@ -18,6 +21,8 @@ import java.time.LocalDateTime;
  * @date 2025-12-28
  * @version 2.0.0
  */
+@Setter
+@Getter
 @TableName("dt_conversation")
 public class ConversationEntity {
     
@@ -64,59 +69,4 @@ public class ConversationEntity {
     public ConversationEntity() {
     }
 
-    public String getThreadId() {
-        return threadId;
-    }
-
-    public void setThreadId(String threadId) {
-        this.threadId = threadId;
-    }
-
-    public String getCurrentPhase() {
-        return currentPhase;
-    }
-
-    public void setCurrentPhase(String currentPhase) {
-        this.currentPhase = currentPhase;
-    }
-
-    public Integer getDialogueCount() {
-        return dialogueCount;
-    }
-
-    public void setDialogueCount(Integer dialogueCount) {
-        this.dialogueCount = dialogueCount;
-    }
-
-    public Boolean getNeedFollowup() {
-        return needFollowup;
-    }
-
-    public void setNeedFollowup(Boolean needFollowup) {
-        this.needFollowup = needFollowup;
-    }
-
-    public String getFinalReport() {
-        return finalReport;
-    }
-
-    public void setFinalReport(String finalReport) {
-        this.finalReport = finalReport;
-    }
-
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public LocalDateTime getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public void setUpdatedAt(LocalDateTime updatedAt) {
-        this.updatedAt = updatedAt;
-    }
 }

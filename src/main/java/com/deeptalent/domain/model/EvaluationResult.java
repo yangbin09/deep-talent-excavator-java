@@ -1,6 +1,9 @@
-package com.deeptalent.domain;
+package com.deeptalent.domain.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Getter;
+import lombok.Setter;
+
 import java.util.List;
 
 /**
@@ -11,6 +14,8 @@ import java.util.List;
  * @date 2025-12-28
  * @version 1.0.0
  */
+@Setter
+@Getter
 public class EvaluationResult {
     /**
      * 评分
@@ -45,46 +50,6 @@ public class EvaluationResult {
     private String reason;
 
     public EvaluationResult() {
-    }
-
-    public int getScore() {
-        return score;
-    }
-
-    public void setScore(int score) {
-        this.score = score;
-    }
-
-    public boolean isNeedFollowup() {
-        return needFollowup;
-    }
-
-    public void setNeedFollowup(boolean needFollowup) {
-        this.needFollowup = needFollowup;
-    }
-
-    public String getFollowupQuestion() {
-        return followupQuestion;
-    }
-
-    public void setFollowupQuestion(String followupQuestion) {
-        this.followupQuestion = followupQuestion;
-    }
-
-    public List<Extraction> getExtractions() {
-        return extractions;
-    }
-
-    public void setExtractions(List<Extraction> extractions) {
-        this.extractions = extractions;
-    }
-
-    public String getReason() {
-        return reason;
-    }
-
-    public void setReason(String reason) {
-        this.reason = reason;
     }
 
     @Override

@@ -1,7 +1,7 @@
 package com.deeptalent.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.deeptalent.domain.PromptConfigEntity;
+import com.deeptalent.domain.entity.PromptConfigEntity;
 import com.deeptalent.mapper.PromptConfigMapper;
 import com.deeptalent.service.PromptService;
 import org.slf4j.Logger;

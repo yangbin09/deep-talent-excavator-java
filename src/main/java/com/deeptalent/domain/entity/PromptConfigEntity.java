@@ -1,4 +1,4 @@
-package com.deeptalent.domain;
+package com.deeptalent.domain.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;

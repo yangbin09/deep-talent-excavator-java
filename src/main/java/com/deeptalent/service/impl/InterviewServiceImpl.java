@@ -1,6 +1,10 @@
 package com.deeptalent.service.impl;
 
-import com.deeptalent.domain.*;
+import com.deeptalent.domain.ai.Message;
+import com.deeptalent.domain.enums.Phase;
+import com.deeptalent.domain.model.DeepTalentState;
+import com.deeptalent.domain.model.EvaluationResult;
+import com.deeptalent.domain.model.Extraction;
 import com.deeptalent.service.InterviewService;
 import com.deeptalent.service.PersistenceService;
 import com.deeptalent.service.PromptService;
@@ -9,7 +13,6 @@ import com.deeptalent.service.ai.DeepTalentAgent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;

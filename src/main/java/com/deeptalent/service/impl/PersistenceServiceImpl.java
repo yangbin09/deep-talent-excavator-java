@@ -1,7 +1,13 @@
 package com.deeptalent.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.deeptalent.domain.*;
+import com.deeptalent.domain.ai.Message;
+import com.deeptalent.domain.entity.ConversationEntity;
+import com.deeptalent.domain.entity.ExtractionEntity;
+import com.deeptalent.domain.entity.MessageEntity;
+import com.deeptalent.domain.enums.Phase;
+import com.deeptalent.domain.model.DeepTalentState;
+import com.deeptalent.domain.model.Extraction;
 import com.deeptalent.mapper.ConversationMapper;
 import com.deeptalent.mapper.ExtractionMapper;
 import com.deeptalent.mapper.MessageMapper;

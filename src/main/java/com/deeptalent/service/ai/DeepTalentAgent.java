@@ -1,6 +1,6 @@
 package com.deeptalent.service.ai;
 
-import com.deeptalent.domain.EvaluationResult;
+import com.deeptalent.domain.model.EvaluationResult;
 import dev.langchain4j.service.spring.AiService;
 
 import dev.langchain4j.data.message.ChatMessage;

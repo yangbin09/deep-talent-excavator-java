@@ -1,7 +1,7 @@
 package com.deeptalent.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.deeptalent.domain.MessageEntity;
+import com.deeptalent.domain.entity.MessageEntity;
 import org.apache.ibatis.annotations.Mapper;
 
 /**

@@ -1,7 +1,7 @@
 package com.deeptalent.service;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.deeptalent.domain.PromptConfigEntity;
+import com.deeptalent.domain.entity.PromptConfigEntity;
 import com.deeptalent.mapper.PromptConfigMapper;
 import com.deeptalent.service.impl.PromptServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
@@ -11,7 +11,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.Collections;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

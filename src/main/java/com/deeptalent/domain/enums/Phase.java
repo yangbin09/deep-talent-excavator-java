@@ -1,4 +1,6 @@
-package com.deeptalent.domain;
+package com.deeptalent.domain.enums;
+
+import lombok.Getter;
 
 /**
  * 对话阶段枚举类
@@ -8,6 +10,7 @@ package com.deeptalent.domain;
  * @date 2025-12-28
  * @version 1.0.0
  */
+@Getter
 public enum Phase {
     /**
      * 童年阶段
@@ -35,6 +38,11 @@ public enum Phase {
 
     /**
      * 阶段的字符串值
+     * -- GETTER --
+     *  获取阶段的字符串值
+     *
+     * @return 阶段字符串
+
      */
     private final String value;
 
@@ -47,12 +55,4 @@ public enum Phase {
         this.value = value;
     }
 
-    /**
-     * 获取阶段的字符串值
-     *
-     * @return 阶段字符串
-     */
-    public String getValue() {
-        return value;
-    }
 }

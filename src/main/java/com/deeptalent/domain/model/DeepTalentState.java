@@ -1,4 +1,9 @@
-package com.deeptalent.domain;
+package com.deeptalent.domain.model;
+
+import com.deeptalent.domain.ai.Message;
+import com.deeptalent.domain.enums.Phase;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -13,6 +18,8 @@ import java.util.Map;
  * @date 2025-12-28
  * @version 1.0.0
  */
+@Setter
+@Getter
 public class DeepTalentState {
     /**
      * 对话消息历史列表
@@ -60,59 +67,4 @@ public class DeepTalentState {
     public DeepTalentState() {
     }
 
-    public List<Message> getMessages() {
-        return messages;
-    }
-
-    public void setMessages(List<Message> messages) {
-        this.messages = messages;
-    }
-
-    public Phase getCurrentPhase() {
-        return currentPhase;
-    }
-
-    public void setCurrentPhase(Phase currentPhase) {
-        this.currentPhase = currentPhase;
-    }
-
-    public Map<String, List<Extraction>> getUserProfile() {
-        return userProfile;
-    }
-
-    public void setUserProfile(Map<String, List<Extraction>> userProfile) {
-        this.userProfile = userProfile;
-    }
-
-    public int getDialogueCount() {
-        return dialogueCount;
-    }
-
-    public void setDialogueCount(int dialogueCount) {
-        this.dialogueCount = dialogueCount;
-    }
-
-    public boolean isNeedFollowup() {
-        return needFollowup;
-    }
-
-    public void setNeedFollowup(boolean needFollowup) {
-        this.needFollowup = needFollowup;
-    }
-
-    public EvaluationResult getLastEval() {
-        return lastEval;
-    }
-
-    public void setLastEval(EvaluationResult lastEval) {
-        this.lastEval = lastEval;
-    }
-
-    public String getFinalReport() {
-        return finalReport;
-    }
-
-    public void setFinalReport(String finalReport) {
-        this.finalReport = finalReport;
-    }
 }
