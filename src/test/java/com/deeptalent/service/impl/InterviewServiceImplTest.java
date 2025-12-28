@@ -5,6 +5,7 @@ import com.deeptalent.domain.EvaluationResult;
 import com.deeptalent.domain.Message;
 import com.deeptalent.domain.Phase;
 import com.deeptalent.service.PersistenceService;
+import com.deeptalent.service.PromptService;
 import com.deeptalent.service.ai.DeepTalentAgent;
 import dev.langchain4j.data.message.ChatMessage;
 import org.junit.jupiter.api.BeforeEach;
@@ -20,6 +21,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.anyList;
 import static org.mockito.Mockito.*;
 
 /**
@@ -38,6 +40,9 @@ public class InterviewServiceImplTest {
     @Mock
     private PersistenceService persistenceService;
 
+    @Mock
+    private PromptService promptService;
+
     @InjectMocks
     private InterviewServiceImpl interviewService;
 
@@ -49,6 +54,10 @@ public class InterviewServiceImplTest {
         mockState = new DeepTalentState();
         mockState.setMessages(new ArrayList<>());
         mockState.setCurrentPhase(Phase.CHILDHOOD);
+        
+        // Leniently mock prompt service because not all tests use it in the same way, 
+        // but we want to avoid NullPointerException if it is called.
+        lenient().when(promptService.getPrompt(anyString())).thenReturn("Prompt Template");
     }
 
     @Test
@@ -75,7 +84,7 @@ public class InterviewServiceImplTest {
         EvaluationResult evalResult = new EvaluationResult();
         evalResult.setScore(8);
         evalResult.setNeedFollowup(false);
-        when(deepTalentAgent.evaluate(anyString(), anyString())).thenReturn(evalResult);
+        when(deepTalentAgent.evaluate(anyList())).thenReturn(evalResult);
 
         // Mock Chat response
         when(deepTalentAgent.chat(anyList())).thenReturn("这是下一个问题");
@@ -85,7 +94,7 @@ public class InterviewServiceImplTest {
 
         // Assert
         assertEquals("这是下一个问题", response);
-        verify(deepTalentAgent).evaluate(eq("childhood"), eq("我小时候喜欢画画"));
+        verify(deepTalentAgent).evaluate(anyList());
         verify(deepTalentAgent).chat(anyList());
         verify(persistenceService).saveState(eq(threadId), any(DeepTalentState.class));
         
@@ -103,7 +112,7 @@ public class InterviewServiceImplTest {
         EvaluationResult evalResult = new EvaluationResult();
         evalResult.setNeedFollowup(true);
         evalResult.setFollowupQuestion("具体画了什么？");
-        when(deepTalentAgent.evaluate(anyString(), anyString())).thenReturn(evalResult);
+        when(deepTalentAgent.evaluate(anyList())).thenReturn(evalResult);
         
         // Mock Chat response (Interviewer generates the followup question based on eval)
         when(deepTalentAgent.chat(anyList())).thenReturn("具体画了什么？");

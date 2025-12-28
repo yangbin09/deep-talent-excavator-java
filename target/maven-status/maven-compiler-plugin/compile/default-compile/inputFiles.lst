@@ -9,12 +9,16 @@ D:\code\心里咨询\html\java\src\main\java\com\deeptalent\domain\ExtractionEnt
 D:\code\心里咨询\html\java\src\main\java\com\deeptalent\domain\Message.java
 D:\code\心里咨询\html\java\src\main\java\com\deeptalent\domain\MessageEntity.java
 D:\code\心里咨询\html\java\src\main\java\com\deeptalent\domain\Phase.java
+D:\code\心里咨询\html\java\src\main\java\com\deeptalent\domain\PromptConfigEntity.java
 D:\code\心里咨询\html\java\src\main\java\com\deeptalent\mapper\ConversationMapper.java
 D:\code\心里咨询\html\java\src\main\java\com\deeptalent\mapper\ExtractionMapper.java
 D:\code\心里咨询\html\java\src\main\java\com\deeptalent\mapper\MessageMapper.java
+D:\code\心里咨询\html\java\src\main\java\com\deeptalent\mapper\PromptConfigMapper.java
 D:\code\心里咨询\html\java\src\main\java\com\deeptalent\service\ai\DeepTalentAgent.java
 D:\code\心里咨询\html\java\src\main\java\com\deeptalent\service\impl\InterviewServiceImpl.java
 D:\code\心里咨询\html\java\src\main\java\com\deeptalent\service\impl\PersistenceServiceImpl.java
+D:\code\心里咨询\html\java\src\main\java\com\deeptalent\service\impl\PromptServiceImpl.java
 D:\code\心里咨询\html\java\src\main\java\com\deeptalent\service\InterviewService.java
 D:\code\心里咨询\html\java\src\main\java\com\deeptalent\service\PersistenceService.java
 D:\code\心里咨询\html\java\src\main\java\com\deeptalent\service\Prompts.java
+D:\code\心里咨询\html\java\src\main\java\com\deeptalent\service\PromptService.java

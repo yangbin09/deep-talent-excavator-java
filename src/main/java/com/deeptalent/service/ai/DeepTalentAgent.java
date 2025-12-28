@@ -1,10 +1,6 @@
 package com.deeptalent.service.ai;
 
 import com.deeptalent.domain.EvaluationResult;
-import com.deeptalent.service.Prompts;
-import dev.langchain4j.service.SystemMessage;
-import dev.langchain4j.service.UserMessage;
-import dev.langchain4j.service.V;
 import dev.langchain4j.service.spring.AiService;
 
 import dev.langchain4j.data.message.ChatMessage;
@@ -23,9 +19,5 @@ public interface DeepTalentAgent {
 
     String chat(List<ChatMessage> messages);
 
-    @SystemMessage(Prompts.EVALUATOR_SYSTEM_PROMPT)
-    EvaluationResult evaluate(
-        @V("phase") String phase,
-        @UserMessage String userMessage
-    );
+    EvaluationResult evaluate(List<ChatMessage> messages);
 }

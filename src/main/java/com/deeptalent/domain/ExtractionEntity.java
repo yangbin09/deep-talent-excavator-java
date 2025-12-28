@@ -5,6 +5,8 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.FieldFill;
+import lombok.Data;
+
 import java.time.LocalDateTime;
 
 /**
@@ -15,6 +17,7 @@ import java.time.LocalDateTime;
  * @date 2025-12-28
  * @version 1.0.0
  */
+@Data
 @TableName("dt_extraction")
 public class ExtractionEntity {
 
@@ -68,59 +71,5 @@ public class ExtractionEntity {
         this.createdAt = createdAt;
     }
 
-    public Long getId() {
-        return id;
-    }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getThreadId() {
-        return threadId;
-    }
-
-    public void setThreadId(String threadId) {
-        this.threadId = threadId;
-    }
-
-    public String getPhase() {
-        return phase;
-    }
-
-    public void setPhase(String phase) {
-        this.phase = phase;
-    }
-
-    public String getTag() {
-        return tag;
-    }
-
-    public void setTag(String tag) {
-        this.tag = tag;
-    }
-
-    public String getEvidence() {
-        return evidence;
-    }
-
-    public void setEvidence(String evidence) {
-        this.evidence = evidence;
-    }
-
-    public Double getConfidence() {
-        return confidence;
-    }
-
-    public void setConfidence(Double confidence) {
-        this.confidence = confidence;
-    }
-
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
-    }
 }

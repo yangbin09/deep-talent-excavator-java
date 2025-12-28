@@ -5,6 +5,8 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.FieldFill;
+import lombok.Data;
+
 import java.time.LocalDateTime;
 
 /**
@@ -15,6 +17,7 @@ import java.time.LocalDateTime;
  * @date 2025-12-28
  * @version 1.0.0
  */
+@Data
 @TableName("dt_message")
 public class MessageEntity {
     
@@ -62,51 +65,5 @@ public class MessageEntity {
         this.createdAt = createdAt;
     }
 
-    public Long getId() {
-        return id;
-    }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getThreadId() {
-        return threadId;
-    }
-
-    public void setThreadId(String threadId) {
-        this.threadId = threadId;
-    }
-
-    public String getRole() {
-        return role;
-    }
-
-    public void setRole(String role) {
-        this.role = role;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
-    }
-
-    public Integer getSequence() {
-        return sequence;
-    }
-
-    public void setSequence(Integer sequence) {
-        this.sequence = sequence;
-    }
-
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
-    }
 }

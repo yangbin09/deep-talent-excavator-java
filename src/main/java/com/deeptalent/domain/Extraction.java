@@ -1,7 +1,5 @@
 package com.deeptalent.domain;
 
-import lombok.Data;
-
 /**
  * 特征提取实体类
  * 用于描述从用户对话中提取出的具体特征、证据及置信度
@@ -10,7 +8,6 @@ import lombok.Data;
  * @date 2025-12-28
  * @version 1.0.0
  */
-@Data
 public class Extraction {
     /**
      * 标签
@@ -41,6 +38,40 @@ public class Extraction {
         this.tag = tag;
         this.evidence = evidence;
         this.phase = phase;
+        this.confidence = confidence;
+    }
+
+    public Extraction() {}
+
+    public String getTag() {
+        return tag;
+    }
+
+    public void setTag(String tag) {
+        this.tag = tag;
+    }
+
+    public String getEvidence() {
+        return evidence;
+    }
+
+    public void setEvidence(String evidence) {
+        this.evidence = evidence;
+    }
+
+    public String getPhase() {
+        return phase;
+    }
+
+    public void setPhase(String phase) {
+        this.phase = phase;
+    }
+
+    public double getConfidence() {
+        return confidence;
+    }
+
+    public void setConfidence(double confidence) {
         this.confidence = confidence;
     }
 }

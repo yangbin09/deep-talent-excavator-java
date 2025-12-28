@@ -3,6 +3,7 @@ package com.deeptalent.service.impl;
 import com.deeptalent.domain.*;
 import com.deeptalent.service.InterviewService;
 import com.deeptalent.service.PersistenceService;
+import com.deeptalent.service.PromptService;
 import com.deeptalent.service.Prompts;
 import com.deeptalent.service.ai.DeepTalentAgent;
 import org.slf4j.Logger;
@@ -28,16 +29,19 @@ public class InterviewServiceImpl implements InterviewService {
 
     private final DeepTalentAgent deepTalentAgent;
     private final PersistenceService persistenceService;
+    private final PromptService promptService;
 
     /**
      * 构造函数
      *
      * @param deepTalentAgent    LangChain4j AI Agent
      * @param persistenceService 持久化服务
+     * @param promptService      提示词服务
      */
-    public InterviewServiceImpl(DeepTalentAgent deepTalentAgent, PersistenceService persistenceService) {
+    public InterviewServiceImpl(DeepTalentAgent deepTalentAgent, PersistenceService persistenceService, PromptService promptService) {
         this.deepTalentAgent = deepTalentAgent;
         this.persistenceService = persistenceService;
+        this.promptService = promptService;
     }
 
     /**
@@ -136,7 +140,8 @@ public class InterviewServiceImpl implements InterviewService {
         int newCount = dialogueCount + 1;
         
         // 填充 Prompt 模板
-        String prompt = Prompts.INTERVIEWER_SYSTEM_PROMPT
+        String promptTemplate = promptService.getPrompt(Prompts.INTERVIEWER_SYSTEM_PROMPT);
+        String prompt = promptTemplate
                 .replace("{phase}", currentPhase.getValue())
                 .replace("{dialogue_count}", String.valueOf(newCount))
                 .replace("{last_eval}", lastEval != null ? lastEval.toString() : "无"); 
@@ -170,8 +175,16 @@ public class InterviewServiceImpl implements InterviewService {
         String lastUserContent = messages.get(messages.size() - 1).getContent();
         
         try {
+            // 获取并处理 Prompt
+            String promptTemplate = promptService.getPrompt(Prompts.EVALUATOR_SYSTEM_PROMPT);
+            String systemPrompt = promptTemplate.replace("{phase}", currentPhase.getValue());
+
             // 调用 LLM (LangChain4j 自动处理结构化输出)
-            EvaluationResult result = deepTalentAgent.evaluate(currentPhase.getValue(), lastUserContent);
+            List<dev.langchain4j.data.message.ChatMessage> evalMessages = new ArrayList<>();
+            evalMessages.add(dev.langchain4j.data.message.SystemMessage.from(systemPrompt));
+            evalMessages.add(dev.langchain4j.data.message.UserMessage.from(lastUserContent));
+            
+            EvaluationResult result = deepTalentAgent.evaluate(evalMessages);
             
             // 更新画像信息 (Extractions)
             Map<String, List<Extraction>> profile = state.getUserProfile();
@@ -260,7 +273,8 @@ public class InterviewServiceImpl implements InterviewService {
         Map<String, List<Extraction>> profile = state.getUserProfile();
         
         // 填充 Prompt
-        String prompt = Prompts.WRITER_SYSTEM_PROMPT.replace("{user_profile}", String.valueOf(profile));
+        String promptTemplate = promptService.getPrompt(Prompts.WRITER_SYSTEM_PROMPT);
+        String prompt = promptTemplate.replace("{user_profile}", String.valueOf(profile));
         
         // 构建上下文：历史消息
         List<dev.langchain4j.data.message.ChatMessage> history = convertMessages(state.getMessages());
