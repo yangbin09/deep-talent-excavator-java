@@ -1,2 +1,15 @@
 /target/
 /target/*
+/.idea/*
+/.classpath
+/.project
+/.settings/
+/.git/
+/.gitignore
+/.travis.yml
+/.coveralls.yml
+/.gitmodules
+/.mvn/
+/.mvn/wrapper/
+/.mvn/wrapper/maven-wrapper.properties
+/.mvn/wrapper/maven-wrapper.jar
