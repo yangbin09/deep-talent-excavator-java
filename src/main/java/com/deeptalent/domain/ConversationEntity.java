@@ -5,8 +5,7 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.AllArgsConstructor;
+
 import java.time.LocalDateTime;
 
 /**
@@ -21,10 +20,8 @@ import java.time.LocalDateTime;
  * @date 2025-12-28
  * @version 2.0.0
  */
-@TableName("dt_conversation")
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
+@TableName("dt_conversation")
 public class ConversationEntity {
     
     /**
@@ -65,4 +62,6 @@ public class ConversationEntity {
      */
     @TableField(fill = FieldFill.INSERT_UPDATE)
     private LocalDateTime updatedAt;
+
+
 }

@@ -4,7 +4,11 @@ import com.deeptalent.domain.DeepTalentState;
 
 /**
  * 持久化服务接口
- * 定义会话状态的保存与加载操作
+ * 定义会话状态的保存与加载操作，负责将内存中的状态持久化到数据库
+ *
+ * @author 小阳
+ * @date 2025-12-28
+ * @version 1.0.0
  */
 public interface PersistenceService {
 

@@ -5,7 +5,7 @@ package com.deeptalent.domain;
  * 定义咨询过程中的不同阶段，用于控制对话流程
  *
  * @author 小阳
- * @date 2025-12-27
+ * @date 2025-12-28
  * @version 1.0.0
  */
 public enum Phase {

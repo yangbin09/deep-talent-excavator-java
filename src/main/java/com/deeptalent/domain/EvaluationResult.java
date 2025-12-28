@@ -1,8 +1,6 @@
 package com.deeptalent.domain;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 import java.util.List;
 
 /**
@@ -10,11 +8,9 @@ import java.util.List;
  * 用于封装对用户回答的评估分析结果，包括评分、追问建议及特征提取
  *
  * @author 小阳
- * @date 2025-12-27
+ * @date 2025-12-28
  * @version 1.0.0
  */
-@Data
-@NoArgsConstructor
 public class EvaluationResult {
     /**
      * 评分
@@ -47,4 +43,58 @@ public class EvaluationResult {
      * 给出评分或追问建议的具体原因说明
      */
     private String reason;
+
+    public EvaluationResult() {
+    }
+
+    public int getScore() {
+        return score;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
+    }
+
+    public boolean isNeedFollowup() {
+        return needFollowup;
+    }
+
+    public void setNeedFollowup(boolean needFollowup) {
+        this.needFollowup = needFollowup;
+    }
+
+    public String getFollowupQuestion() {
+        return followupQuestion;
+    }
+
+    public void setFollowupQuestion(String followupQuestion) {
+        this.followupQuestion = followupQuestion;
+    }
+
+    public List<Extraction> getExtractions() {
+        return extractions;
+    }
+
+    public void setExtractions(List<Extraction> extractions) {
+        this.extractions = extractions;
+    }
+
+    public String getReason() {
+        return reason;
+    }
+
+    public void setReason(String reason) {
+        this.reason = reason;
+    }
+
+    @Override
+    public String toString() {
+        return "EvaluationResult{" +
+                "score=" + score +
+                ", needFollowup=" + needFollowup +
+                ", followupQuestion='" + followupQuestion + '\'' +
+                ", extractions=" + extractions +
+                ", reason='" + reason + '\'' +
+                '}';
+    }
 }

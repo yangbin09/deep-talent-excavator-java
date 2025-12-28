@@ -27,3 +27,13 @@ deepseek:
   api-key: ${DEEPSEEK_API_KEY:sk-935c19fce76b4556a026b0d7ad49db03}
   base-url: https://api.deepseek.com
   chat-model: deepseek-chat
+
+langchain4j:
+  open-ai:
+    chat-model:
+      base-url: ${deepseek.base-url}
+      api-key: ${deepseek.api-key}
+      model-name: ${deepseek.chat-model}
+      timeout: PT60S
+      log-requests: true
+      log-responses: true

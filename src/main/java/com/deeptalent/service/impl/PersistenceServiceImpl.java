@@ -18,10 +18,15 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
- * 持久化服务实现类 (重构版)
- * 适配新的关系型数据库结构
+ * 持久化服务实现类
+ * 基于 MyBatis Plus 实现会话状态的数据库存取
+ *
+ * @author 小阳
+ * @date 2025-12-28
+ * @version 1.0.0
  */
 @Service
+@Transactional
 public class PersistenceServiceImpl implements PersistenceService {
 
     private final ConversationMapper conversationMapper;

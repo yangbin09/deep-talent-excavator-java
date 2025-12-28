@@ -1,5 +1,13 @@
 package com.deeptalent.service;
 
+/**
+ * 提示词常量类
+ * 集中管理所有与大模型交互使用的 System Prompt 和 Template
+ *
+ * @author 小阳
+ * @date 2025-12-28
+ * @version 1.0.0
+ */
 public class Prompts {
 
     public static final String EVALUATOR_SYSTEM_PROMPT = """

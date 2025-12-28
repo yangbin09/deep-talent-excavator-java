@@ -1,41 +1,43 @@
 package com.deeptalent.service.impl;
 
 import com.deeptalent.domain.*;
-import com.deeptalent.service.DeepSeekClientService;
 import com.deeptalent.service.InterviewService;
 import com.deeptalent.service.PersistenceService;
 import com.deeptalent.service.Prompts;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import lombok.extern.slf4j.Slf4j;
+import com.deeptalent.service.ai.DeepTalentAgent;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 /**
- * 面试服务实现类
- * 核心业务逻辑层，管理面试流程、状态流转和各个节点的执行
+ * 访谈服务实现类
+ *
+ * @author 小阳
+ * @date 2025-12-28
+ * @version 1.0.0
  */
 @Service
-@Slf4j
 public class InterviewServiceImpl implements InterviewService {
 
-    private final DeepSeekClientService llmClient;
+    private static final Logger log = LoggerFactory.getLogger(InterviewServiceImpl.class);
+
+    private final DeepTalentAgent deepTalentAgent;
     private final PersistenceService persistenceService;
-    private final ObjectMapper objectMapper;
 
     /**
      * 构造函数
      *
-     * @param llmClient          LLM 客户端服务
+     * @param deepTalentAgent    LangChain4j AI Agent
      * @param persistenceService 持久化服务
-     * @param objectMapper       JSON 工具
      */
-    public InterviewServiceImpl(DeepSeekClientService llmClient, PersistenceService persistenceService, ObjectMapper objectMapper) {
-        this.llmClient = llmClient;
+    public InterviewServiceImpl(DeepTalentAgent deepTalentAgent, PersistenceService persistenceService) {
+        this.deepTalentAgent = deepTalentAgent;
         this.persistenceService = persistenceService;
-        this.objectMapper = objectMapper;
     }
 
     /**
@@ -137,15 +139,14 @@ public class InterviewServiceImpl implements InterviewService {
         String prompt = Prompts.INTERVIEWER_SYSTEM_PROMPT
                 .replace("{phase}", currentPhase.getValue())
                 .replace("{dialogue_count}", String.valueOf(newCount))
-                .replace("{last_eval}", String.valueOf(lastEval)); 
+                .replace("{last_eval}", lastEval != null ? lastEval.toString() : "无"); 
         
-        // 构建上下文：System Prompt + 历史消息
-        List<Message> context = new ArrayList<>();
-        context.add(new Message("system", prompt));
-        context.addAll(state.getMessages());
+        // 构建上下文：历史消息 (将 System Prompt 加入到消息列表头部)
+        List<dev.langchain4j.data.message.ChatMessage> history = convertMessages(state.getMessages());
+        history.add(0, dev.langchain4j.data.message.SystemMessage.from(prompt));
         
         // 调用 LLM 生成问题
-        String response = llmClient.chat(context, 0.7, false);
+        String response = deepTalentAgent.chat(history);
         
         // 更新状态
         state.getMessages().add(new Message("assistant", response));
@@ -168,19 +169,9 @@ public class InterviewServiceImpl implements InterviewService {
         
         String lastUserContent = messages.get(messages.size() - 1).getContent();
         
-        // 填充评估 Prompt
-        String prompt = Prompts.EVALUATOR_SYSTEM_PROMPT.replace("{phase}", currentPhase.getValue());
-        
-        // 构建上下文：System Prompt + 用户最新一条回答
-        List<Message> context = new ArrayList<>();
-        context.add(new Message("system", prompt));
-        context.add(new Message("user", lastUserContent));
-        
         try {
-            // 调用 LLM (JSON 模式)
-            String jsonResponse = llmClient.chat(context, 0, true);
-            // 解析 JSON 结果
-            EvaluationResult result = objectMapper.readValue(jsonResponse, EvaluationResult.class);
+            // 调用 LLM (LangChain4j 自动处理结构化输出)
+            EvaluationResult result = deepTalentAgent.evaluate(currentPhase.getValue(), lastUserContent);
             
             // 更新画像信息 (Extractions)
             Map<String, List<Extraction>> profile = state.getUserProfile();
@@ -271,18 +262,33 @@ public class InterviewServiceImpl implements InterviewService {
         // 填充 Prompt
         String prompt = Prompts.WRITER_SYSTEM_PROMPT.replace("{user_profile}", String.valueOf(profile));
         
-        // 构建上下文
-        List<Message> context = new ArrayList<>();
-        context.add(new Message("system", prompt));
-        context.addAll(state.getMessages());
+        // 构建上下文：历史消息
+        List<dev.langchain4j.data.message.ChatMessage> history = convertMessages(state.getMessages());
+        history.add(0, dev.langchain4j.data.message.SystemMessage.from(prompt));
         
         // 调用 LLM 生成报告
-        String response = llmClient.chat(context, 0.7, false);
+        String response = deepTalentAgent.chat(history);
         
         // 保存报告
         state.setFinalReport(response);
         state.getMessages().add(new Message("assistant", response));
         
         return state;
+    }
+    
+    /**
+     * 将业务消息转换为 LangChain4j 消息
+     */
+    private List<dev.langchain4j.data.message.ChatMessage> convertMessages(List<Message> messages) {
+        List<dev.langchain4j.data.message.ChatMessage> chatMessages = new ArrayList<>();
+        for (Message msg : messages) {
+            if ("user".equals(msg.getRole())) {
+                chatMessages.add(new dev.langchain4j.data.message.UserMessage(msg.getContent()));
+            } else if ("assistant".equals(msg.getRole())) {
+                chatMessages.add(new dev.langchain4j.data.message.AiMessage(msg.getContent()));
+            } 
+            // 注意：我们不将 system 消息添加到历史中，因为我们在调用 chat 时会单独传递 system prompt
+        }
+        return chatMessages;
     }
 }

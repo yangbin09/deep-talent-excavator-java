@@ -1,20 +1,13 @@
 package com.deeptalent.domain;
 
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.AllArgsConstructor;
-
 /**
  * 消息实体类
  * 表示对话中的单条消息记录，包含角色和内容
  *
  * @author 小阳
- * @date 2025-12-27
+ * @date 2025-12-28
  * @version 1.0.0
  */
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
 public class Message {
     /**
      * 消息角色
@@ -27,4 +20,28 @@ public class Message {
      * 具体的文本内容
      */
     private String content;
+
+    public Message() {
+    }
+
+    public Message(String role, String content) {
+        this.role = role;
+        this.content = content;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
 }

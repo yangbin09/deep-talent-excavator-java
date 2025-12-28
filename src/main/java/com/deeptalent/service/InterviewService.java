@@ -2,7 +2,11 @@ package com.deeptalent.service;
 
 /**
  * 面试服务接口
- * 定义面试流程的核心业务操作
+ * 定义面试流程的核心业务操作，包括会话的启动、恢复和消息处理
+ *
+ * @author 小阳
+ * @date 2025-12-28
+ * @version 1.0.0
  */
 public interface InterviewService {
 
