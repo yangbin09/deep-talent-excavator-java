@@ -1,5 +1,7 @@
 package com.deeptalent.service;
 
+import java.util.Map;
+
 /**
  * 面试服务接口
  * 定义面试流程的核心业务操作，包括会话的启动、恢复和消息处理
@@ -11,12 +13,12 @@ package com.deeptalent.service;
 public interface InterviewService {
 
     /**
-     * 启动或恢复面试会话
+     * 根据用户名启动或恢复面试会话
      *
-     * @param threadId 会话唯一标识符
-     * @return AI 的欢迎语或上一条消息
+     * @param userName 用户姓名
+     * @return 包含 threadId 和 message 的 Map
      */
-    String startSession(String threadId);
+    Map<String, String> startSession(String userName);
 
     /**
      * 处理用户消息并推进对话流程

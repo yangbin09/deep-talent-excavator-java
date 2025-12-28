@@ -82,6 +82,11 @@ public class PersistenceServiceImpl implements PersistenceService {
                 .map(e -> new Message(e.getRole(), e.getContent()))
                 .collect(Collectors.toList());
         state.setMessages(messages);
+        
+        // 恢复 threadName (取第一条消息的 threadName，如果存在)
+        if (!msgEntities.isEmpty()) {
+            state.setThreadName(msgEntities.get(0).getThreadName());
+        }
 
         // 4. 查询并组装用户画像 (Extractions)
         List<ExtractionEntity> extEntities = extractionMapper.selectList(
@@ -142,6 +147,7 @@ public class PersistenceServiceImpl implements PersistenceService {
                 msgEntity.setRole(msg.getRole());
                 msgEntity.setContent(msg.getContent());
                 msgEntity.setSequence(i);
+                msgEntity.setThreadName(state.getThreadName());
                 msgEntity.setCreatedAt(LocalDateTime.now());
                 messageMapper.insert(msgEntity);
             }

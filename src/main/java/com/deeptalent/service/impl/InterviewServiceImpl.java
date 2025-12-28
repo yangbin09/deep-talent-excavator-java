@@ -48,27 +48,50 @@ public class InterviewServiceImpl implements InterviewService {
     }
 
     /**
-     * 启动或恢复面试会话
+     * 根据用户名启动或恢复面试会话
      *
-     * @param threadId 会话唯一标识符
-     * @return AI 的欢迎语或上一条消息
+     * @param userName 用户姓名
+     * @return 包含 threadId 和 message 的 Map
      */
     @Override
-    public String startSession(String threadId) {
+    public Map<String, String> startSession(String userName) {
+        // Generate threadId from userName
+        String threadId = generateThreadId(userName);
+
         // 1. 加载状态
         DeepTalentState state = persistenceService.loadState(threadId);
         
+        // 设置 threadName
+        state.setThreadName(userName);
+        
+        String response;
         // 2. 判断是否是新会话（无消息记录）
         if (state.getMessages().isEmpty()) {
             // 冷启动：直接进入访谈节点生成第一个问题
             state = interviewerNode(state);
             // 保存初始状态
             persistenceService.saveState(threadId, state);
-            return getLastAssistantMessage(state);
+            response = getLastAssistantMessage(state);
+        } else {
+            // 3. 如果是恢复会话，直接返回最后一条助手消息
+            response = getLastAssistantMessage(state);
         }
         
-        // 3. 如果是恢复会话，直接返回最后一条助手消息
-        return getLastAssistantMessage(state);
+        return Map.of("threadId", threadId, "message", response);
+    }
+
+    private String generateThreadId(String userName) {
+        try {
+            java.security.MessageDigest md = java.security.MessageDigest.getInstance("MD5");
+            byte[] array = md.digest(userName.getBytes("UTF-8"));
+            StringBuilder sb = new StringBuilder();
+            for (byte b : array) {
+                sb.append(String.format("%02x", b));
+            }
+            return sb.toString();
+        } catch (Exception e) {
+            throw new RuntimeException("MD5 generation failed", e);
+        }
     }
 
     /**
@@ -131,6 +154,21 @@ public class InterviewServiceImpl implements InterviewService {
 
     // --- 内部核心节点逻辑 ---
 
+    private String cleanJsonOutput(String text) {
+        if (text == null) return "";
+        text = text.trim();
+        // 移除 Markdown 代码块标记
+        if (text.startsWith("```json")) {
+            text = text.substring(7);
+        } else if (text.startsWith("```")) {
+            text = text.substring(3);
+        }
+        if (text.endsWith("```")) {
+            text = text.substring(0, text.length() - 3);
+        }
+        return text.trim();
+    }
+
     /**
      * 访谈节点：生成下一个面试问题
      */
@@ -187,7 +225,14 @@ public class InterviewServiceImpl implements InterviewService {
             evalMessages.add(dev.langchain4j.data.message.SystemMessage.from(systemPrompt));
             evalMessages.add(dev.langchain4j.data.message.UserMessage.from(lastUserContent));
             
-            EvaluationResult result = deepTalentAgent.evaluate(evalMessages);
+            String rawResponse = deepTalentAgent.evaluate(evalMessages);
+            
+            // 清洗 Markdown 代码块标记
+            String jsonStr = cleanJsonOutput(rawResponse);
+            
+            // 手动解析
+            com.google.gson.Gson gson = new com.google.gson.Gson();
+            EvaluationResult result = gson.fromJson(jsonStr, EvaluationResult.class);
             
             // 更新画像信息 (Extractions)
             Map<String, List<Extraction>> profile = state.getUserProfile();

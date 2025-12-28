@@ -60,16 +60,21 @@ public class InterviewServiceImplTest {
     @Test
     void testStartSession_NewSession() {
         // Arrange
-        when(persistenceService.loadState(threadId)).thenReturn(new DeepTalentState());
+        String userName = "TestUser";
+        // Mock persistenceService to return empty state for any threadId (since we don't know the generated MD5 beforehand easily in test setup without calculation)
+        when(persistenceService.loadState(anyString())).thenReturn(new DeepTalentState());
         when(deepTalentAgent.chat(anyList())).thenReturn("你好！我是深度天赋挖掘机");
 
         // Act
-        String response = interviewService.startSession(threadId);
+        java.util.Map<String, String> result = interviewService.startSession(userName);
 
         // Assert
+        assertNotNull(result);
+        assertNotNull(result.get("threadId"));
+        String response = result.get("message");
         assertNotNull(response);
         assertTrue(response.contains("你好！我是深度天赋挖掘机"));
-        verify(persistenceService, times(1)).saveState(eq(threadId), any(DeepTalentState.class));
+        verify(persistenceService, times(1)).saveState(anyString(), any(DeepTalentState.class));
     }
 
     @Test

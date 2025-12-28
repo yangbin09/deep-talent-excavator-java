@@ -48,6 +48,11 @@ public class MessageEntity {
     private Integer sequence;
 
     /**
+     * 会话名称/用户姓名
+     */
+    private String threadName;
+
+    /**
      * 创建时间
      */
     @TableField(fill = FieldFill.INSERT)

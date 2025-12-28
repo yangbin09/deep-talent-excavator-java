@@ -64,6 +64,11 @@ public class DeepTalentState {
      */
     private String finalReport;
 
+    /**
+     * 会话名称/用户姓名
+     */
+    private String threadName;
+
     public DeepTalentState() {
     }
 

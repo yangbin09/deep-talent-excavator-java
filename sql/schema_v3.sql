@@ -46,6 +46,8 @@ VALUES ('EVALUATOR_SYSTEM_PROMPT', 'zh-CN', '你是“深度天赋挖掘机”�
 - "extractions"：数组，每项结构：{"tag": "...", "evidence": "...", "phase": "...", "confidence": 0.0-1.0}
 - "reason"：简短中文理由（用于调试，不直接展示给用户）
 
+**重要：直接输出 JSON 文本，不要使用 markdown 代码块（如 ```json），不要包含任何解释性文字。**
+
 判定规则：
 - 用户回答非常空泛/只有结论/缺少情境细节时，need_followup=true。
 - 如果信息够深且可抽取要素足够推进阶段，need_followup=false。

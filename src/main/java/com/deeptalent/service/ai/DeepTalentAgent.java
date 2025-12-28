@@ -19,5 +19,5 @@ public interface DeepTalentAgent {
 
     String chat(List<ChatMessage> messages);
 
-    EvaluationResult evaluate(List<ChatMessage> messages);
+    String evaluate(List<ChatMessage> messages);
 }

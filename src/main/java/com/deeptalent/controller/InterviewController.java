@@ -30,15 +30,15 @@ public class InterviewController {
 
     /**
      * 启动新的面试会话
-     * @param threadId 会话唯一标识符
+     * @param userName 用户姓名
      * @return 包含threadId和欢迎消息的响应实体
      */
     @PostMapping("/start")
-    public ResponseEntity<Map<String, String>> startSession(@RequestParam String threadId) {
+    public ResponseEntity<Map<String, String>> startSession(@RequestParam String userName) {
         // 调用服务层启动会话
-        String response = interviewService.startSession(threadId);
+        Map<String, String> result = interviewService.startSession(userName);
         // 返回包含会话ID和响应消息的JSON格式数据
-        return ResponseEntity.ok(Map.of("threadId", threadId, "message", response));
+        return ResponseEntity.ok(result);
     }
 
     /**
