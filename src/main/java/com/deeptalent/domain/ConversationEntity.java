@@ -2,34 +2,67 @@ package com.deeptalent.domain;
 
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.FieldFill;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
+import java.time.LocalDateTime;
 
 /**
- * 此时会话实体类
- * 用于持久化存储用户会话状态及相关数据
+ * 会话基础实体类
+ * 
+ * 重构说明：
+ * 1. 拆分原 stateJson 中的结构化字段
+ * 2. 增加审计字段（创建时间、更新时间）
+ * 3. 规范化命名
  *
  * @author 小阳
- * @date 2025-12-27
- * @version 1.0.0
+ * @date 2025-12-28
+ * @version 2.0.0
  */
-@TableName("conversations")
+@TableName("dt_conversation")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class ConversationEntity {
     
     /**
-     * 会话唯一标识符
-     * 通常使用UUID或其他唯一字符串作为主键
+     * 会话唯一标识符 (主键)
      */
     @TableId
     private String threadId;
     
     /**
-     * 会话状态的JSON字符串表示
-     * 存储DeepTalentState对象的序列化数据，用于恢复会话上下文
+     * 当前对话阶段
+     * 对应 Phase 枚举
      */
-    private String stateJson;
+    private String currentPhase;
+    
+    /**
+     * 对话轮数计数器
+     */
+    private Integer dialogueCount;
+    
+    /**
+     * 是否需要追问
+     */
+    private Boolean needFollowup;
+    
+    /**
+     * 最终分析报告 (长文本)
+     */
+    private String finalReport;
+
+    /**
+     * 创建时间
+     */
+    @TableField(fill = FieldFill.INSERT)
+    private LocalDateTime createdAt;
+
+    /**
+     * 更新时间
+     */
+    @TableField(fill = FieldFill.INSERT_UPDATE)
+    private LocalDateTime updatedAt;
 }
