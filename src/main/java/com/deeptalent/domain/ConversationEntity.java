@@ -1,9 +1,7 @@
 package com.deeptalent.domain;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
@@ -16,8 +14,7 @@ import lombok.AllArgsConstructor;
  * @date 2025-12-27
  * @version 1.0.0
  */
-@Entity
-@Table(name = "conversations")
+@TableName("conversations")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -27,13 +24,12 @@ public class ConversationEntity {
      * 会话唯一标识符
      * 通常使用UUID或其他唯一字符串作为主键
      */
-    @Id
+    @TableId
     private String threadId;
     
     /**
      * 会话状态的JSON字符串表示
      * 存储DeepTalentState对象的序列化数据，用于恢复会话上下文
      */
-    @Column(columnDefinition = "TEXT")
     private String stateJson;
 }

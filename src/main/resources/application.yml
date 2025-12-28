@@ -5,15 +5,23 @@ spring:
   application:
     name: deep-talent-excavator
   datasource:
-    url: jdbc:sqlite:data/deep_talent.sqlite
-    driver-class-name: org.sqlite.JDBC
-    username: sa
-    password: 
-  jpa:
-    database-platform: org.hibernate.community.dialect.SQLiteDialect
-    hibernate:
-      ddl-auto: update
-    show-sql: true
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://175.178.5.205:13306/deep_talent?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
+    username: deep_talent
+    password: frffJzEfccff3ZQa
+    hikari:
+      maximum-pool-size: 10
+      minimum-idle: 2
+      connection-timeout: 30000
+      idle-timeout: 600000
+      max-lifetime: 1800000
+      pool-name: DeepTalentCP
+
+mybatis-plus:
+  mapper-locations: classpath*:/mapper/**/*.xml
+  configuration:
+    map-underscore-to-camel-case: true
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 
 deepseek:
   api-key: ${DEEPSEEK_API_KEY:sk-935c19fce76b4556a026b0d7ad49db03}
